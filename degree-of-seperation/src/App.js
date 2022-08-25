@@ -51,13 +51,11 @@ function App() {
 
     function dfs(current, end) {
       console.log(current);
-      visited[current] = true;
-
       if (current === end) {
-        console.log("Found", current);
-        visited[current] = false;
         return;
       }
+
+      visited[current] = true;
 
       for (let i = 0; i < list[current].length; i++) {
         if (!visited[list[current][i]]) {
