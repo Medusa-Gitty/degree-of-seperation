@@ -29,6 +29,7 @@ function App() {
     "Bhaskar",
     "Kamalnath Sharma",
     "Shanti Kumar Saha",
+    "Sayak",
   ];
 
   arr.forEach((user) => {
@@ -37,6 +38,7 @@ function App() {
 
   useEffect(() => {
     addFriend("Sameer", "Aayushi");
+    addFriend("Aayushi", "Sayak");
     addFriend("Bhaskar", "Aayushi");
     addFriend("Sameer", "Kamalnath Sharma");
     addFriend("Kamalnath Sharma", "Shanti Kumar Saha");
@@ -47,11 +49,17 @@ function App() {
     console.log(list);
     let results = [];
     let visited = {};
+    let routes = ["Sameer"];
     dfs("Sameer", "Bhaskar");
 
     function dfs(current, end) {
-      console.log(current);
+      if (current !== "Sameer") {
+        routes.push(current);
+      }
+
       if (current === end) {
+        results.push(routes);
+        routes = ["Sameer"];
         return;
       }
 
