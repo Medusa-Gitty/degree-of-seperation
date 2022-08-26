@@ -3,6 +3,8 @@ import "./App.css";
 import Users from "./components/Users";
 import Relationship from "./components/RelationShip";
 import AllUsers from "./components/AllUsers";
+import Mutuals from "./components/Mutuals";
+import { Box, Flex } from "@chakra-ui/react";
 
 function App() {
   const [list, setList] = useState({});
@@ -46,8 +48,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(list);
-
     const visited = {};
     const routes = [];
     const ans = [];
@@ -61,8 +61,7 @@ function App() {
       routes.push(current);
 
       if (current === end) {
-        console.log(routes);
-        ans.push(routes);
+        ans.push([...routes]);
         visited[current] = false;
         routes.pop();
         return;
@@ -75,16 +74,17 @@ function App() {
       routes.pop();
       visited[current] = false;
     }
-    dfs("Sameer", "Bhaskar");
+    // dfs("Kamalnath Sharma", "Bhaskar");
   }, []);
 
   return (
-    <div className="App">
-      <div>Degree of seperation</div>
+    <Box className="App">
+      <Box>Degree of seperation</Box>
       <Users addUser={addUser} />
       <Relationship addFriend={addFriend} />
       <AllUsers list={list} />
-    </div>
+      <Mutuals list={list} />
+    </Box>
   );
 }
 
