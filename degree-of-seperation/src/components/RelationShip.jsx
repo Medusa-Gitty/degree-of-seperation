@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Flex, Select, useToast } from "@chakra-ui/react";
 
-const RelationShip = ({ addFriend, list }) => {
+const RelationShip = ({ addFriend, list, autoAddFriend }) => {
   const [user1, setUser1] = useState("");
   const [user2, setUser2] = useState("");
 
@@ -28,9 +28,14 @@ const RelationShip = ({ addFriend, list }) => {
 
   return (
     <Flex direction="column" p={3} gap={2}>
-      <Box fontSize={["20px", "25px"]} align="left">
-        Set relationship between two users :
-      </Box>
+      <Flex gap={3}>
+        <Box fontSize={["20px", "25px"]} align="left">
+          Set relationship between two users :
+        </Box>
+        <Button colorScheme="yellow" variant="solid" onClick={autoAddFriend}>
+          Auto set DEMO relationship
+        </Button>
+      </Flex>
       <Flex gap={4}>
         <Select
           placeholder="Select user 1"
