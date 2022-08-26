@@ -4,6 +4,7 @@
 
 
 <h3 align="center"><a href="https://degree-of-seperation.vercel.app/"><strong>Live !</strong></a></h3>
+<h3 align="center"><a href="https://drive.google.com/file/d/17VmtmHgjp1nJaCQPEbvse-CfgFPrdZos/view?usp=sharing"><strong>Demo Walkthrough</strong></a></h3>
 
 <h2 align="center">An app to find the degree of seperation between two person.</h2>
 
