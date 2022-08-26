@@ -47,32 +47,35 @@ function App() {
 
   useEffect(() => {
     console.log(list);
-    let results = [];
-    let visited = {};
-    let routes = ["Sameer"];
-    dfs("Sameer", "Bhaskar");
+
+    const visited = {};
+    const routes = [];
+    const ans = [];
 
     function dfs(current, end) {
-      if (current !== "Sameer") {
-        routes.push(current);
-      }
-
-      if (current === end) {
-        results.push(routes);
-        routes = ["Sameer"];
+      if (visited[current]) {
         return;
       }
 
       visited[current] = true;
+      routes.push(current);
+
+      if (current === end) {
+        console.log(routes);
+        ans.push(routes);
+        visited[current] = false;
+        routes.pop();
+        return;
+      }
 
       for (let i = 0; i < list[current].length; i++) {
-        if (!visited[list[current][i]]) {
-          dfs(list[current][i], end);
-        }
+        dfs(list[current][i], end);
       }
-    }
 
-    console.log(results);
+      routes.pop();
+      visited[current] = false;
+    }
+    dfs("Sameer", "Bhaskar");
   }, []);
 
   return (
