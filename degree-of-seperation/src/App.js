@@ -9,9 +9,7 @@ import DisplayDOS from "./components/DisplayDOS";
 
 function App() {
   const [list, setList] = useState({});
-  const [result, setResult] = useState([]);
-
-  console.log(list);
+  const [result, setResult] = useState(null);
 
   const toast = useToast();
 
@@ -20,14 +18,29 @@ function App() {
       list[user] = [];
       setList({ ...list });
     } else {
-      // toast({
-      //   title: "User already added",
-      //   status: "warning",
-      //   duration: 3000,
-      //   isClosable: true,
-      // });
+      toast({
+        title: "User already added",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
       return;
     }
+  }
+
+  function autoAddUsers() {
+    let arr = [
+      "Sameer",
+      "Aayushi",
+      "Bhaskar",
+      "Kamalnath Sharma",
+      "Shanti Kumar Saha",
+      "Sayak",
+      "Adil",
+    ];
+    arr.forEach((user) => {
+      addUser(user);
+    });
   }
 
   function addFriend(u1, u2) {
@@ -47,27 +60,14 @@ function App() {
     setList({ ...list });
   }
 
-  let arr = [
-    "Sameer",
-    "Aayushi",
-    "Bhaskar",
-    "Kamalnath Sharma",
-    "Shanti Kumar Saha",
-    "Sayak",
-  ];
-
-  arr.forEach((user) => {
-    addUser(user);
-  });
-
-  useEffect(() => {
+  function autoAddFriend() {
     addFriend("Sameer", "Aayushi");
     addFriend("Aayushi", "Sayak");
     addFriend("Bhaskar", "Aayushi");
     addFriend("Sameer", "Kamalnath Sharma");
     addFriend("Kamalnath Sharma", "Shanti Kumar Saha");
     addFriend("Shanti Kumar Saha", "Bhaskar");
-  }, []);
+  }
 
   function doS(start, target) {
     const visited = {};
@@ -102,10 +102,13 @@ function App() {
 
   return (
     <Box className="App">
-      {/* <Box>Degree of seperation</Box> */}
-      <Users addUser={addUser} />
+      <Users addUser={addUser} autoAddUsers={autoAddUsers} />
       <AllUsers list={list} />
-      <Relationship addFriend={addFriend} list={list} />
+      <Relationship
+        addFriend={addFriend}
+        list={list}
+        autoAddFriend={autoAddFriend}
+      />
       <Mutuals list={list} doS={doS} />
       <DisplayDOS result={result} />
     </Box>
