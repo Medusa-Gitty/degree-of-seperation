@@ -1,37 +1,74 @@
 import React, { useState } from "react";
-import { Button, Flex, Input } from "@chakra-ui/react";
+import { Box, Button, Flex, Select, useToast } from "@chakra-ui/react";
 
-const RelationShip = ({ addFriend }) => {
+const RelationShip = ({ addFriend, list }) => {
   const [user1, setUser1] = useState("");
   const [user2, setUser2] = useState("");
 
+  const toast = useToast();
+  const users = Object.keys(list);
+
   function friend() {
+    if (user1 === "" || user2 === "" || user1 === user2) {
+      toast({
+        title: "Please select two different users",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+      setUser1("");
+      setUser2("");
+      return;
+    }
+
     addFriend(user1, user2);
     setUser1("");
     setUser2("");
   }
 
   return (
-    <Flex padding={2} gap={3}>
-      <Input
-        placeholder="User 1"
-        onChange={(e) => setUser1(e.target.value)}
-        value={user1}
-      />
-      <Input
-        placeholder="User 2"
-        onChange={(e) => setUser2(e.target.value)}
-        value={user2}
-      />
-
-      <Button
-        colorScheme="teal"
-        variant="outline"
-        width="100%"
-        onClick={friend}
-      >
-        Add as a friend
-      </Button>
+    <Flex direction="column" p={3} gap={2}>
+      <Box fontSize={["20px", "25px"]} align="left">
+        Set relationship between two users :
+      </Box>
+      <Flex gap={4}>
+        <Select
+          placeholder="Select user 1"
+          variant="outline"
+          onChange={(e) => setUser1(e.target.value)}
+          value={user1}
+        >
+          {users.map((user, i) => {
+            return (
+              <option value={user} key={i}>
+                {user}
+              </option>
+            );
+          })}
+        </Select>
+        <Select
+          placeholder="Select user 2"
+          variant="outline"
+          onChange={(e) => setUser2(e.target.value)}
+          value={user2}
+        >
+          {users.map((user, i) => {
+            return (
+              <option value={user} key={i}>
+                {user}
+              </option>
+            );
+          })}
+        </Select>
+        <Button
+          colorScheme="pink"
+          variant="outline"
+          width="100%"
+          onClick={friend}
+        >
+          Add as a friend
+        </Button>
+      </Flex>
     </Flex>
   );
 };

@@ -4,22 +4,44 @@ import Users from "./components/Users";
 import Relationship from "./components/RelationShip";
 import AllUsers from "./components/AllUsers";
 import Mutuals from "./components/Mutuals";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
+import DisplayDOS from "./components/DisplayDOS";
 
 function App() {
   const [list, setList] = useState({});
+  const [result, setResult] = useState([]);
+
+  console.log(list);
+
+  const toast = useToast();
 
   function addUser(user) {
     if (!list[user]) {
       list[user] = [];
       setList({ ...list });
     } else {
-      //ERROR
+      // toast({
+      //   title: "User already added",
+      //   status: "warning",
+      //   duration: 3000,
+      //   isClosable: true,
+      // });
       return;
     }
   }
 
   function addFriend(u1, u2) {
+    const found = list[u1].find((e) => e === u2);
+    if (found !== undefined) {
+      toast({
+        title: "Both users are already friend",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
     list[u1].push(u2);
     list[u2].push(u1);
     setList({ ...list });
@@ -47,7 +69,7 @@ function App() {
     addFriend("Shanti Kumar Saha", "Bhaskar");
   }, []);
 
-  useEffect(() => {
+  function doS(start, target) {
     const visited = {};
     const routes = [];
     const ans = [];
@@ -74,16 +96,18 @@ function App() {
       routes.pop();
       visited[current] = false;
     }
-    // dfs("Kamalnath Sharma", "Bhaskar");
-  }, []);
+    dfs(start, target);
+    setResult(ans);
+  }
 
   return (
     <Box className="App">
-      <Box>Degree of seperation</Box>
+      {/* <Box>Degree of seperation</Box> */}
       <Users addUser={addUser} />
-      <Relationship addFriend={addFriend} />
       <AllUsers list={list} />
-      <Mutuals list={list} />
+      <Relationship addFriend={addFriend} list={list} />
+      <Mutuals list={list} doS={doS} />
+      <DisplayDOS result={result} />
     </Box>
   );
 }
