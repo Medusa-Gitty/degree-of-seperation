@@ -4,6 +4,7 @@ import { Box, Button, Flex, Select, useToast } from "@chakra-ui/react";
 const RelationShip = ({ addFriend, list, autoAddFriend }) => {
   const [user1, setUser1] = useState("");
   const [user2, setUser2] = useState("");
+  const [isDisabled, setDisabled] = useState(false);
 
   const toast = useToast();
   const users = Object.keys(list);
@@ -32,7 +33,15 @@ const RelationShip = ({ addFriend, list, autoAddFriend }) => {
         <Box fontSize={["20px", "25px"]} align="left">
           Set relationship between two users :
         </Box>
-        <Button colorScheme="yellow" variant="solid" onClick={autoAddFriend}>
+        <Button
+          colorScheme="yellow"
+          variant="solid"
+          onClick={() => {
+            autoAddFriend();
+            setDisabled(true);
+          }}
+          disabled={isDisabled}
+        >
           Auto set DEMO relationship
         </Button>
       </Flex>

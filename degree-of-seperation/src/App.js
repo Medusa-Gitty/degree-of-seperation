@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import Users from "./components/Users";
 import Relationship from "./components/RelationShip";

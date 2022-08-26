@@ -3,6 +3,7 @@ import { Box, Button, Flex, Input, useToast } from "@chakra-ui/react";
 
 const Users = ({ addUser, autoAddUsers }) => {
   const [user, setUser] = useState("");
+  const [isDisabled, setDisabled] = useState(false);
 
   const toast = useToast();
 
@@ -26,7 +27,15 @@ const Users = ({ addUser, autoAddUsers }) => {
         <Box fontSize={["20px", "25px"]} align="left">
           Add an user :
         </Box>
-        <Button colorScheme="yellow" variant="solid" onClick={autoAddUsers}>
+        <Button
+          colorScheme="yellow"
+          variant="solid"
+          onClick={() => {
+            setDisabled(true);
+            autoAddUsers();
+          }}
+          disabled={isDisabled}
+        >
           Auto fill with DEMO data
         </Button>
       </Flex>
